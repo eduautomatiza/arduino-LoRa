@@ -3,7 +3,6 @@
 // license information.
 
 #include <LoRa.h>
-#include <crc.h>
 
 // registers
 #define REG_FIFO 0x00
