@@ -293,6 +293,10 @@ int LoRaClass::packetRssi() {
                                                   : RSSI_OFFSET_HF_PORT));
 }
 
+int LoRaClass::rawPacketSnr() {
+  return ((int8_t)readRegister(REG_PKT_SNR_VALUE));
+}
+
 float LoRaClass::packetSnr() {
   return ((int8_t)readRegister(REG_PKT_SNR_VALUE)) * 0.25;
 }
