@@ -44,8 +44,9 @@ class LoRaClass : public Stream {
   int endPacket(bool async = false, int implicitHeader = false);
 
   int parsePacket(int size = 0);
+  uint8_t rawPacketRssi();
   int packetRssi();
-  int rawPacketSnr();
+  uint8_t rawPacketSnr();
   float packetSnr();
   long packetFrequencyError();
 

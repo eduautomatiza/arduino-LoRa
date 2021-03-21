@@ -287,14 +287,18 @@ int LoRaClass::parsePacket(int size) {
   return packetLength;
 }
 
+uint8_t LoRaClass::rawPacketRssi() {
+  return readRegister(REG_PKT_RSSI_VALUE);
+}
+
 int LoRaClass::packetRssi() {
   return (readRegister(REG_PKT_RSSI_VALUE) - (_frequency < RF_MID_BAND_THRESHOLD
                                                   ? RSSI_OFFSET_LF_PORT
                                                   : RSSI_OFFSET_HF_PORT));
 }
 
-int LoRaClass::rawPacketSnr() {
-  return ((int8_t)readRegister(REG_PKT_SNR_VALUE));
+uint8_t LoRaClass::rawPacketSnr() {
+  return readRegister(REG_PKT_SNR_VALUE);
 }
 
 float LoRaClass::packetSnr() {
