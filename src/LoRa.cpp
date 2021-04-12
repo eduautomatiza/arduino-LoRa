@@ -38,6 +38,7 @@
 #define REG_SYNC_WORD 0x39
 #define REG_INVERTIQ2 0x3b
 #define REG_DIO_MAPPING_1 0x40
+#define REG_DIO_MAPPING_2 0x41
 #define REG_VERSION 0x42
 #define REG_PA_DAC 0x4d
 
@@ -215,6 +216,7 @@ int LoRaClass::endPacket(bool async, int implicitHeader) {
 
   // put in TX mode
   writeRegister(REG_OP_MODE, MODE_LONG_RANGE_MODE | MODE_TX);
+  writeRegister(REG_DIO_MAPPING_2, 0x00);  //
 
   if (!async) {
     // wait for TX done
@@ -440,6 +442,7 @@ void LoRaClass::onTxDone(void (*callback)()) {
 
 void LoRaClass::receive(int size) {
   writeRegister(REG_DIO_MAPPING_1, 0x00);  // DIO0 => RXDONE
+  writeRegister(REG_DIO_MAPPING_2, 0x40);  //
 
   if (size > 0) {
     implicitHeaderMode();
