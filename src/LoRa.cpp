@@ -757,16 +757,12 @@ void LoRaClass::writeRegister(uint8_t address, uint8_t value) {
 
 uint8_t LoRaClass::singleTransfer(uint8_t address, uint8_t value) {
   uint8_t response;
-
-  digitalWrite(_ss, LOW);
-
   _spi->beginTransaction(_spiSettings);
+  digitalWrite(_ss, LOW);
   _spi->transfer(address);
   response = _spi->transfer(value);
-  _spi->endTransaction();
-
   digitalWrite(_ss, HIGH);
-
+  _spi->endTransaction();
   return response;
 }
 
@@ -775,23 +771,19 @@ ISR_PREFIX void LoRaClass::onDio0Rise() { LoRa.handleDio0Rise(); }
 LoRaClass LoRa;
 
 void LoRaClass::fifoTransferRead(uint8_t* buf, size_t size) {
-  digitalWrite(_ss, LOW);
-
   _spi->beginTransaction(_spiSettings);
+  digitalWrite(_ss, LOW);
   _spi->transfer(REG_FIFO);
   _spi->transferBytes(NULL, buf, size);
-  _spi->endTransaction();
-
   digitalWrite(_ss, HIGH);
+  _spi->endTransaction();
 }
 
 void LoRaClass::fifoTransferWrite(const uint8_t* buf, size_t size) {
-  digitalWrite(_ss, LOW);
-
   _spi->beginTransaction(_spiSettings);
+  digitalWrite(_ss, LOW);
   _spi->transfer(REG_FIFO | 0x80);
   _spi->transferBytes((uint8_t*)(buf), NULL, size);
-  _spi->endTransaction();
-
   digitalWrite(_ss, HIGH);
+  _spi->endTransaction();
 }
